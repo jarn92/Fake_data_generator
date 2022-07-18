@@ -104,28 +104,26 @@ def create_fake_data(df, size):
     return df_fake_data
 
 @st.cache
-def convert_df(df):
+def convert_csvdf(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
 	return df.to_csv().encode('utf-8')
 
-st.title('Fake Data generator')
+@st.cache 
+def convert_xlsxdf(df):
+    # IMPORTANT: Cache the conversion to prevent computation on every rerun
+    return df.to_excel().encode('utf-8')
 
-uploaded_file = st.file_uploader("Choose a file")
 
-
-
-if uploaded_file:
-	
-	size=int(st.number_input('Insert the number of rows',step=1000))
-	name_file=st.text_input('Insert the name of the new file')
-	
-	if st.button('create new data set'):
-		df=pd.read_excel(uploaded_file)
-		df_fake_data=create_fake_data(df,size)
-		csv= convert_df(df_fake_data)
-		st.download_button(
-     	label="Download data as CSV",
-    	data=csv,
-     	file_name=f'{name_file}.csv',
-    	mime='text/csv',
- 	)
+def main():
+    st.title('Fake Data generator')
+    uploaded_file = st.file_uploader("Choose a file")
+    if uploaded_file:
+        size=int(st.number_input('Insert the number of rows',step=1000))
+        name_file=st.text_input('Insert the name of the new file')
+        if st.button('create new data set'):
+            df=pd.read_excel(uploaded_file)
+            df_fake_data=create_fake_data(df,size)
+            csv= convert_csvdf(df_fake_data)
+            st.download_button(label="Download data as CSV",data=csv,file_name=f'{name_file}.csv',mime='text/csv')
+    
+main()
