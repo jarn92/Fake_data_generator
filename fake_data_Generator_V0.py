@@ -123,7 +123,10 @@ def main():
         if st.button('create new data set'):
             df=pd.read_excel(uploaded_file)
             df_fake_data=create_fake_data(df,size)
-            csv= convert_xlsxf(df_fake_data)
-            st.download_button(label="Download data as CSV",data=csv,file_name=f'{name_file}.xlsx',mime='text/xlsx')
-    
+            csv= convert_csvdf(df_fake_data)
+            st.download_button(
+        label="Download data as CSV",
+        data=csv,
+        file_name=f'{name_file}.csv',
+        mime='text/csv')
 main()
