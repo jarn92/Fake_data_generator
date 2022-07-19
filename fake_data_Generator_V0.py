@@ -108,6 +108,13 @@ def convert_csvdf(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
 	return df.to_csv().encode('utf-8')
 
+def to_excel(df):
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer, index=False, sheet_name='Sheet1')
+    writer.save()
+    processed_data = output.getvalue()
+    return processed_data
 
 def main():
     st.title('Fake Data generator')
@@ -119,6 +126,7 @@ def main():
             df=pd.read_excel(uploaded_file)
             df_fake_data=create_fake_data(df,size)
             csv= convert_csvdf(df_fake_data)
+            df_excel = to_excel(df_fake_data)	
             st.download_button(label="📥 Download (.csv)",data=csv,file_name=f'{name_file}.csv',mime='text/csv')
-            st.download_button(label="📥 Download (.xlsx)",data=df_fake_data,file_name=f'{name_file}.xlsx',mime='text/xlsx')
+            st.download_button(label="📥 Download (.xlsx)",data=df_excel,file_name=f'{name_file}.xlsx',mime='text/xlsx')
 main()
