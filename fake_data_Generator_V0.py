@@ -108,12 +108,6 @@ def convert_csvdf(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
 	return df.to_csv().encode('utf-8')
 
-@st.cache 
-def convert_xlsxdf(df):
-    # IMPORTANT: Cache the conversion to prevent computation on every rerun
-    return df.to_excel().encode('utf-8')
-
-
 
 def main():
     st.title('Fake Data generator')
@@ -125,6 +119,6 @@ def main():
             df=pd.read_excel(uploaded_file)
             df_fake_data=create_fake_data(df,size)
             csv= convert_csvdf(df_fake_data)
-            download_button(label="📥 Download (.csv)",data=csv,file_name=f'{name_file}.csv',mime='text/csv')
-            download_button(label="📥 Download (.xlsx)",data=csv,file_name=f'{name_file}.xlsx',mime='text/xlsx')
+            st.download_button(label="📥 Download (.csv)",data=csv,file_name=f'{name_file}.csv',mime='text/csv')
+            st.download_button(label="📥 Download (.xlsx)",data=csv,file_name=f'{name_file}.xlsx',mime='text/xlsx')
 main()
