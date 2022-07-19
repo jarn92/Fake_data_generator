@@ -120,5 +120,5 @@ def main():
             df_fake_data=create_fake_data(df,size)
             csv= convert_csvdf(df_fake_data)
             st.download_button(label="📥 Download (.csv)",data=csv,file_name=f'{name_file}.csv',mime='text/csv')
-            st.download_button(label="📥 Download (.xlsx)",data=csv,file_name=f'{name_file}.xlsx',mime='text/xlsx')
+            st.download_button(label="📥 Download (.xlsx)",data=df_fake_data,file_name=f'{name_file}.xlsx',mime='text/xlsx')
 main()
