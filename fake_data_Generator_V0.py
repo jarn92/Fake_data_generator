@@ -122,7 +122,7 @@ def main():
     if uploaded_file:
         size=int(st.number_input('Insert the number of rows',step=1000))
         name_file=st.text_input('Insert the name of the new file')
-	l,c,r=st.columns(3)
+        l,c,r=st.columns(3)
         if l.button('create new data set'):
             df=pd.read_excel(uploaded_file)
             df_fake_data=create_fake_data(df,size)
