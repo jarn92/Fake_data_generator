@@ -122,11 +122,12 @@ def main():
     if uploaded_file:
         size=int(st.number_input('Insert the number of rows',step=1000))
         name_file=st.text_input('Insert the name of the new file')
-        if st.button('create new data set'):
+	l,c,r=st.columns(3)
+        if l.button('create new data set'):
             df=pd.read_excel(uploaded_file)
             df_fake_data=create_fake_data(df,size)
             csv= convert_csvdf(df_fake_data)
             df_excel = to_excel(df_fake_data)	
-            st.download_button(label="📥 Download (.csv)",data=csv,file_name=f'{name_file}.csv',mime='text/csv')
-            st.download_button(label="📥 Download (.xlsx)",data=df_excel,file_name=f'{name_file}.xlsx',mime='text/xlsx')
+            c.download_button(label="📥 Download (.csv)",data=csv,file_name=f'{name_file}.csv',mime='text/csv')
+            r.download_button(label="📥 Download (.xlsx)",data=df_excel,file_name=f'{name_file}.xlsx',mime='text/xlsx')
 main()
